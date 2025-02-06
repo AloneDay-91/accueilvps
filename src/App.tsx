@@ -1,0 +1,556 @@
+import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from "@/components/mode-toggle"
+
+import { cn } from "@/lib/utils"
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+import React from "react";
+import {Button} from "@/components/ui/button.tsx";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import { Badge } from "@/components/ui/badge"
+import {Github, SquareArrowOutUpRight, SquareChevronRight} from "lucide-react";
+import {Dialog, DialogContent, DialogTrigger} from "@radix-ui/react-dialog";
+import { nav } from "framer-motion/client";
+
+const components: { title: string; href: string; description: string }[] = [
+    {
+        title: "Aucun outils",
+        href: "#",
+        description:
+            "Aucun outils n'est disponible pour le moment.",
+    }
+]
+
+export function Navbar() {
+    return (
+        <header className="flex items-center justify-between w-full rounded-full max-w-screen-2xl mt-5 z-40">
+            <div>
+                <a href="/" className="flex items-center space-x-2">
+                    <a href="/">
+                        <Button variant="default" className="text-xl font-semibold">
+                            <SquareChevronRight strokeWidth={2} size={12} />
+                            ElouanB.
+                        </Button>
+                    </a>
+                </a>
+            </div>
+            <nav>
+                <NavigationMenu>
+                    <NavigationMenuList className="bg-transparent">
+                        <NavigationMenuItem>
+                            <a href="/">
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    Accueil
+                                </NavigationMenuLink>
+                            </a>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <NavigationMenuTrigger>Ressources</NavigationMenuTrigger>
+                            <NavigationMenuContent>
+                                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                    <li className="row-span-3">
+                                        <NavigationMenuLink asChild>
+                                            <a
+                                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                                href="#travaux"
+                                            >
+                                                <div className="mb-2 mt-4 text-lg font-medium">
+                                                    Mes travaux
+                                                </div>
+                                                <p className="text-sm leading-tight text-muted-foreground">
+                                                    Retrouvez ici mes projets, mes créations et mes travaux universitaire.
+                                                </p>
+                                            </a>
+                                        </NavigationMenuLink>
+                                    </li>
+                                    <ListItem href="/docs" title="Ressources">
+                                        Documentation pour les ressources et les outils.
+                                    </ListItem>
+                                    <ListItem href="https://elouanb.fr" target="_blank" title="Portfolio">
+                                        Mon portfolio personnel.
+                                    </ListItem>
+                                </ul>
+                            </NavigationMenuContent>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <NavigationMenuTrigger>Outils</NavigationMenuTrigger>
+                            <NavigationMenuContent>
+                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                    {components.map((component) => (
+                                        <ListItem
+                                            key={component.title}
+                                            title={component.title}
+                                            href={component.href}
+                                        >
+                                            {component.description}
+                                        </ListItem>
+                                    ))}
+                                </ul>
+                            </NavigationMenuContent>
+                        </NavigationMenuItem>
+                    </NavigationMenuList>
+
+                    <div className="flex items-center gap-2 ml-12">
+                        <a href="https://elouanb.fr">
+                            <Button variant="ghost">
+                                elouanb.fr
+                                <SquareArrowOutUpRight strokeWidth={1}/>
+                            </Button>
+                        </a>
+                        <a href="https://github.com/AloneDay-91" target="_blank">
+                            <Button variant="ghost">
+                                <Github />
+                            </Button>
+                        </a>
+                        <ThemeProvider>
+                            <ModeToggle />
+                        </ThemeProvider>
+                    </div>
+                </NavigationMenu>
+            </nav>
+        </header>
+    )
+}
+
+const ListItem = React.forwardRef<
+    React.ElementRef<"a">,
+    React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+    return (
+        <li>
+            <NavigationMenuLink asChild>
+                <a
+                    ref={ref}
+                    className={cn(
+                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                        className
+                    )}
+                    {...props}
+                >
+                    <div className="text-sm font-medium leading-none">{title}</div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        {children}
+                    </p>
+                </a>
+            </NavigationMenuLink>
+        </li>
+    )
+})
+ListItem.displayName = "ListItem"
+
+export default function App() {
+    return (
+        <div className="flex flex-col items-center mx-24">
+            <Navbar/>
+            <br/>
+            <div className="max-w-screen-2xl w-full">
+                <h1 className="text-left w-full text-2xl font-semibold py-6">Mes travaux</h1>
+                <div>
+                    <p className="text-muted-foreground text-xl py-2">
+                        Semestre 1
+                    </p>
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R112 - Intégration</CardTitle>
+                                <CardDescription>Travaux en intégration</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence1"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Batman</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence2"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 2</h2>
+                                                <p className="text-sm text-muted-foreground">Yoko's Kitchen</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence3"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 3</h2>
+                                                <p className="text-sm text-muted-foreground">Mr Potato</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence4"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 4</h2>
+                                                <p className="text-sm text-muted-foreground">John Doe</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence5"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 5</h2>
+                                                <p className="text-sm text-muted-foreground">Arboretum</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence6"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 6</h2>
+                                                <p className="text-sm text-muted-foreground">Gamers</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R113 - Développement</CardTitle>
+                                <CardDescription>Travaux en développement</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="#"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <p className="text-sm text-muted-foreground">Rien pour le moment</p>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">PHP</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">SQL</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+                <div>
+                    <p className="text-muted-foreground text-xl py-2 mt-24">
+                        Semestre 2
+                    </p>
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R212 - Intégration</CardTitle>
+                                <CardDescription>Travaux en intégration</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence1/monopoly.html"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Monopoly</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence2"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 2</h2>
+                                                <p className="text-sm text-muted-foreground">Hony Tawk</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence3"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 3</h2>
+                                                <p className="text-sm text-muted-foreground">Calculatrice</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <Dialog>
+                                            <DialogTrigger
+                                                className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                                <div className="">
+                                                    <h2 className="uppercase font-semibold">Séquence 4</h2>
+                                                    <p className="text-sm text-muted-foreground">TD javascript</p>
+                                                </div>
+                                                <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                    <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                                </div>
+                                            </DialogTrigger>
+                                            <DialogContent className="w-full">
+                                                <div
+                                                    className="p-12 border border-1 rounded-lg w-full flex items-center justify-between">
+                                                    <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice1.html">
+                                                        <Button>Exercice 1</Button>
+                                                    </a>
+                                                    <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice2.html">
+                                                        <Button>Exercice 2</Button>
+                                                    </a>
+                                                    <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice3.html">
+                                                        <Button>Exercice 3</Button>
+                                                    </a>
+                                                </div>
+                                            </DialogContent>
+                                        </Dialog>
+
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence5"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 5</h2>
+                                                <p className="text-sm text-muted-foreground">Parallax</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence6"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 6</h2>
+                                                <p className="text-sm text-muted-foreground">Wow.js</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R213 - Développement</CardTitle>
+                                <CardDescription>Travaux en développement</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="#"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <p className="text-sm text-muted-foreground">Rien pour le moment</p>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">PHP</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">SQL</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R203 - Accessibilité</CardTitle>
+                                <CardDescription>Travaux en Accessibilité</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r203/sequence1"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Réservation</p>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">PHP</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">SQL</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+                <div>
+                    <p className="text-muted-foreground text-xl py-2 mt-24">
+                        Semestre 3
+                    </p>
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R312 - Intégration</CardTitle>
+                                <CardDescription>Travaux en intégration</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence1/index.html"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Toy Story</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence2/index.html"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 2</h2>
+                                                <p className="text-sm text-muted-foreground">Chat</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a><a href="http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence3/exo2.html"
+                                               className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                        <div className="">
+                                            <h2 className="uppercase font-semibold">Séquence 3</h2>
+                                            <p className="text-sm text-muted-foreground">Drag</p>
+                                        </div>
+                                        <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                            <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                        </div>
+                                    </a>
+
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">PHP</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JSON</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+            </div>
+            <footer className="flex items-center justify-between max-w-screen-2xl w-full h-24 border-t mt-24">
+                <p className="text-muted-foreground">
+                    &copy; 2024 ElouanB.
+                </p>
+                <div className="flex items-center gap-2 ml-12">
+                    <a href="https://elouanb.fr">
+                        <Button variant="ghost">
+                            elouanb.fr
+                            <SquareArrowOutUpRight strokeWidth={1}/>
+                        </Button>
+                    </a>
+                    <ThemeProvider>
+                        <ModeToggle/>
+                    </ThemeProvider>
+                </div>
+            </footer>
+        </div>
+    )
+}
