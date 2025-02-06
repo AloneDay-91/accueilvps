@@ -356,22 +356,30 @@ export default function App() {
                                             <div className="text-sm text-muted-foreground absolute top-2 right-3">
                                                 <SquareArrowOutUpRight fontWeight="1" size={18}/>
                                             </div>
-                                        </a><a href="http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence3/exo2.html"
-                                               className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
-                                        <div className="">
-                                            <h2 className="uppercase font-semibold">Séquence 3</h2>
-                                            <p className="text-sm text-muted-foreground">Drag</p>
-                                        </div>
-                                        <div className="text-sm text-muted-foreground absolute top-2 right-3">
-                                            <SquareArrowOutUpRight fontWeight="1" size={18}/>
-                                        </div>
-                                    </a>
-
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence3/exo2.html" className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 3</h2>
+                                                <p className="text-sm text-muted-foreground">Drag</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                        <a href="http://mmi23f03.mmi-troyes.fr/scss/" className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Sass/SCSS</h2>
+                                                <p className="text-sm text-muted-foreground">Café</p>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
                                     </ul>
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 overflow-x-scroll">
                                     <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
                                     <ul className="flex items-center gap-1">
                                         <li>
@@ -388,6 +396,234 @@ export default function App() {
                                         </li>
                                         <li>
                                             <Badge variant="outline">JSON</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R319 - Symfony</CardTitle>
+                                <CardDescription>Travaux en Symfony</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="https://github.com/AloneDay-91/mmiple"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">MMIPLE</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4 overflow-x-scroll">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">PHP</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">MySql</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+                <div>
+                    <p className="text-muted-foreground text-xl py-2 mt-24">
+                        Semestre 4
+                    </p>
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R405 - Création et design intéractif</CardTitle>
+                                <CardDescription>Travaux en three.js</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="/"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Three.js</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4 overflow-x-scroll">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">Three.js</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R407 - Développement back</CardTitle>
+                                <CardDescription>Travaux en Symfony</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="https://github.com/AloneDay-91/mmiple-S4"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">MMIPLE V2</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4 overflow-x-scroll">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">PHP</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">MySql</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R406 - Développement front</CardTitle>
+                                <CardDescription>Travaux en Vue.js</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="https://github.com/AloneDay-91/vuejsdemo"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Vue.js</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4 overflow-x-scroll">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">Vue.js</Badge>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-full">
+                            <CardHeader>
+                                <CardTitle>R409 - Unity</CardTitle>
+                                <CardDescription>Travaux en Unity</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <ul className="flex flex-col items-center gap-1">
+                                        <a href="http://mmi23f03.mmi-troyes.fr/bowling/"
+                                           className="w-full border border-1 rounded-lg p-6 hover:bg-neutral-100 dark:hover:bg-neutral-900 flex items-center justify-between transition duration-200 relative">
+                                            <div className="">
+                                                <h2 className="uppercase font-semibold">Séquence 1</h2>
+                                                <p className="text-sm text-muted-foreground">Bowling</p>
+                                            </div>
+                                            <div>
+                                            </div>
+                                            <div className="text-sm text-muted-foreground absolute top-2 right-3">
+                                                <SquareArrowOutUpRight fontWeight="1" size={18}/>
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center gap-4 overflow-x-scroll">
+                                    <p className="text-sm text-muted-foreground">Technologies utilisées : </p>
+                                    <ul className="flex items-center gap-1">
+                                        <li>
+                                            <Badge variant="outline">HTML</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">CSS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">JS</Badge>
+                                        </li>
+                                        <li>
+                                            <Badge variant="outline">Vue.js</Badge>
                                         </li>
                                     </ul>
                                 </div>
