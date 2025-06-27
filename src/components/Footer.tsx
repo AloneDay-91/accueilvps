@@ -1,21 +1,21 @@
 import {Button} from "@/components/ui/button.tsx";
-import {SquareArrowOutUpRight} from "lucide-react";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {ModeToggle} from "@/components/mode-toggle.tsx";
+import {ExternalLinkIcon} from "@radix-ui/react-icons";
 
 export function Footer() {
     return (
-        <footer className="flex items-center justify-between max-w-screen-2xl w-full h-24 border-t mt-24">
-            <p className="text-muted-foreground">
-                &copy; 2024 ElouanB.
+        <footer className="flex items-center justify-between w-full max-w-4xl mx-auto h-16 z-40 border-x px-4 bg-background">
+            <p className="text-muted-foreground text-sm font-normal">
+                &copy; 2025 ElouanB.
             </p>
             <div className="flex items-center gap-2 ml-12">
-                <a href="https://elouanb.fr">
-                    <Button variant="ghost">
+                <Button asChild variant="link">
+                    <a href="https://elouanb.fr" target="_blank">
                         elouanb.fr
-                        <SquareArrowOutUpRight strokeWidth={1}/>
-                    </Button>
-                </a>
+                        <ExternalLinkIcon/>
+                    </a>
+                </Button>
                 <ThemeProvider>
                     <ModeToggle/>
                 </ThemeProvider>

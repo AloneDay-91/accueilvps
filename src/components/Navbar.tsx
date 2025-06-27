@@ -1,5 +1,5 @@
 import {Button} from "@/components/ui/button.tsx";
-import {Github, SquareArrowOutUpRight, SquareChevronRight} from "lucide-react";
+import {ExternalLinkIcon, GitHubLogoIcon} from "@radix-ui/react-icons";
 import {
     NavigationMenu, NavigationMenuContent,
     NavigationMenuItem,
@@ -10,6 +10,8 @@ import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {ModeToggle} from "@/components/mode-toggle.tsx";
 import React from "react";
 import {cn} from "@/lib/utils.ts";
+import {ComponentBooleanIcon} from "@radix-ui/react-icons";
+import {Badge} from "@/components/ui/badge.tsx";
 
 const components: { title: string; href: string; description: string }[] = [
     {
@@ -22,14 +24,17 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Navbar() {
     return (
-        <header className="flex items-center justify-between w-full rounded-full max-w-screen-2xl mt-5 z-40">
+        <header className="flex items-center justify-between w-full max-w-4xl mx-auto h-16 z-40 border-x px-4 bg-background">
             <div>
                 <a href="/" className="flex items-center space-x-2">
                     <a href="/">
-                        <Button variant="default" className="text-xl font-semibold">
-                            <SquareChevronRight strokeWidth={2} size={12} />
-                            ElouanB.
-                        </Button>
+                        <div className='flex items-center space-x-2'>
+                            <Button variant="ghost" className="text-xl font-semibold">
+                                <ComponentBooleanIcon/>
+                                Elouan B.
+                            </Button>
+                            <Badge variant='outline'><span className="text-xs">mmi23f03</span></Badge>
+                        </div>
                     </a>
                 </a>
             </div>
@@ -51,7 +56,7 @@ export function Navbar() {
                                         <NavigationMenuLink asChild>
                                             <a
                                                 className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                                href="#travaux"
+                                                href="#"
                                             >
                                                 <div className="mb-2 mt-4 text-lg font-medium">
                                                     Mes travaux
@@ -90,15 +95,15 @@ export function Navbar() {
                     </NavigationMenuList>
 
                     <div className="flex items-center gap-2 ml-12">
-                        <Button asChild variant="ghost">
+                        <Button asChild variant="link">
                             <a href="https://elouanb.fr" target="_blank">
                                 elouanb.fr
-                                <SquareArrowOutUpRight strokeWidth={1}/>
+                                <ExternalLinkIcon/>
                             </a>
                         </Button>
                         <Button asChild variant="ghost" size="icon">
                             <a href="https://github.com/AloneDay-91" target="_blank">
-                                <Github />
+                                <GitHubLogoIcon />
                             </a>
                         </Button>
                         <ThemeProvider>

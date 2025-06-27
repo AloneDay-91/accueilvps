@@ -1,0 +1,144 @@
+{
+  "Semestre 1": {
+    "R112 - Intégration": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Batman",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence1"
+      },
+      {
+        "titre": "Séquence 2",
+        "sujet": "Yoko's Kitchen",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence2"
+      },
+      {
+        "titre": "Séquence 3",
+        "sujet": "Mr Potato",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence3"
+      },
+      {
+        "titre": "Séquence 4",
+        "sujet": "John Doe",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence4"
+      },
+      {
+        "titre": "Séquence 5",
+        "sujet": "Arboretum",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence5"
+      },
+      {
+        "titre": "Séquence 6",
+        "sujet": "Gamers",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence6"
+      }
+    ],
+    "R113 - Développement": []
+  },
+  "Semestre 2": {
+    "R212 - Intégration": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Monopoly",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence1/monopoly.html"
+      },
+      {
+        "titre": "Séquence 2",
+        "sujet": "Hony Tawk",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence2"
+      },
+      {
+        "titre": "Séquence 3",
+        "sujet": "Calculatrice",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence3"
+      },
+      {
+        "titre": "Séquence 4",
+        "sujet": "TD javascript",
+        "liens": [
+          "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice1.html",
+          "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice2.html",
+          "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice3.html"
+        ]
+      },
+      {
+        "titre": "Séquence 5",
+        "sujet": "Parallax",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence5"
+      },
+      {
+        "titre": "Séquence 6",
+        "sujet": "Wow.js",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence6"
+      }
+    ],
+    "R213 - Développement": [],
+    "R203 - Accessibilité": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Réservation",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r203/sequence1"
+      }
+    ]
+  },
+  "Semestre 3": {
+    "R312 - Intégration": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Toy Story",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence1/index.html"
+      },
+      {
+        "titre": "Séquence 2",
+        "sujet": "Chat",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence2/index.html"
+      },
+      {
+        "titre": "Séquence 3",
+        "sujet": "Drag",
+        "lien": "http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence3/exo2.html"
+      },
+      {
+        "titre": "Sass/SCSS",
+        "sujet": "Café",
+        "lien": "http://mmi23f03.mmi-troyes.fr/scss/"
+      }
+    ],
+    "R319 - Symfony": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "MMIPLE",
+        "lien": "https://github.com/AloneDay-91/mmiple"
+      }
+    ]
+  },
+  "Semestre 4": {
+    "R405 - Création et design intéractif": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Three.js",
+        "lien": "/"
+      }
+    ],
+    "R407 - Développement back": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "MMIPLE V2",
+        "lien": "https://github.com/AloneDay-91/mmiple-S4"
+      }
+    ],
+    "R406 - Développement front": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Vue.js",
+        "lien": "https://github.com/AloneDay-91/vuejsdemo"
+      }
+    ],
+    "R409 - Unity": [
+      {
+        "titre": "Séquence 1",
+        "sujet": "Bowling",
+        "lien": "http://mmi23f03.mmi-troyes.fr/bowling/"
+      }
+    ]
+  }
+}
