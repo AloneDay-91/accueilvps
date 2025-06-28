@@ -1,4 +1,4 @@
-import {SunIcon, MoonIcon} from "@radix-ui/react-icons"
+import {SunIcon, MoonIcon, DesktopIcon} from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,13 +23,16 @@ export function ModeToggle() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
+                    <SunIcon className="h-[1.2rem] w-[1.2rem]" />
+                    Clair
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
+                    <MoonIcon className="h-[1.2rem] w-[1.2rem]" />
+                    Sombre
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
+                    <DesktopIcon className="h-[1.2rem] w-[1.2rem]" />
+                    Système
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

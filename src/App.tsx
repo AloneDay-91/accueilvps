@@ -231,7 +231,13 @@ export default function App() {
         <Layout>
             <GridPatternCard>
                 <GridPatternCardBody>
-                    <Badge variant="outline" className="mb-1 text-[9px]">Nouvelle version !</Badge>
+                    <Badge variant="outline" className="mb-1 text-[9px]">
+                        <span
+                            className="size-1.5 rounded-full bg-blue-500 mr-2"
+                            aria-hidden="true"
+                        ></span>
+                        Nouvelle version !
+                    </Badge>
                     <h3 className="text-lg font-bold mb-1 text-foreground">
                         Bienvenue sur mon VPS
                     </h3>

@@ -11,9 +11,9 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 ml-12">
                 <Button asChild variant="link">
-                    <a href="https://elouanb.fr" target="_blank">
+                    <a href="https://elouanb.fr" target="_blank" className="text-xs">
                         elouanb.fr
-                        <ExternalLinkIcon/>
+                        <ExternalLinkIcon className="!w-3" />
                     </a>
                 </Button>
                 <ThemeProvider>

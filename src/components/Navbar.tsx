@@ -1,25 +1,53 @@
 import {Button} from "@/components/ui/button.tsx";
-import {ExternalLinkIcon, GitHubLogoIcon} from "@radix-ui/react-icons";
+import {ExternalLinkIcon, GitHubLogoIcon, LinkedInLogoIcon} from "@radix-ui/react-icons";
 import {
     NavigationMenu, NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
-    NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle
+    NavigationMenuList, NavigationMenuTrigger
 } from "@/components/ui/navigation-menu.tsx";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {ModeToggle} from "@/components/mode-toggle.tsx";
-import React from "react";
 import {cn} from "@/lib/utils.ts";
 import {ComponentBooleanIcon} from "@radix-ui/react-icons";
 import {Badge} from "@/components/ui/badge.tsx";
+import {BookOpenIcon, EllipsisIcon, InfoIcon, LifeBuoyIcon} from "lucide-react";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
-const components: { title: string; href: string; description: string }[] = [
+
+const navigationLinks = [
+    { href: "/", label: "Accueil" },
     {
-        title: "Aucun outils",
-        href: "#",
-        description:
-            "Aucun outils n'est disponible pour le moment.",
-    }
+        label: "Projets",
+        submenu: true,
+        type: "description",
+        items: [
+            {
+                href: "https://elouanb.fr",
+                label: "Portfolio",
+                description: "Découvrez mes projets récents.",
+            },
+            {
+                href: "/docs",
+                label: "Documentation",
+                description: "Accédez à la documentation de mes projets.",
+            },
+            {
+                href: "https://bg.elouanb.fr",
+                label: "Background Collection",
+                description: "Collection de backgrounds pour vos projets.",
+            },
+            {
+                href: "https://elouanb.fr/qrgenerator",
+                label: "QRCode Generator",
+                description: "Générez des QR codes personnalisés.",
+            },
+        ],
+    },
 ]
 
 export function Navbar() {
@@ -38,106 +66,152 @@ export function Navbar() {
                     </a>
                 </a>
             </div>
-            <nav>
+            <nav className='hidden md:block'>
                 <NavigationMenu>
-                    <NavigationMenuList className="bg-transparent">
-                        <NavigationMenuItem>
-                            <a href="/">
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Accueil
-                                </NavigationMenuLink>
-                            </a>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>Ressources</NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                    <li className="row-span-3">
-                                        <NavigationMenuLink asChild>
-                                            <a
-                                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                                href="#"
+                    <NavigationMenuList className="gap-2">
+                        {navigationLinks.map((link, index) => (
+                            <NavigationMenuItem key={index}>
+                                {link.submenu ? (
+                                    <>
+                                        <NavigationMenuTrigger className="text-muted-foreground hover:text-primary bg-transparent px-2 py-1.5 font-medium *:[svg]:-me-0.5 *:[svg]:size-3.5">
+                                            {link.label}
+                                        </NavigationMenuTrigger>
+                                        <NavigationMenuContent className="data-[motion=from-end]:slide-in-from-right-16! data-[motion=from-start]:slide-in-from-left-16! data-[motion=to-end]:slide-out-to-right-16! data-[motion=to-start]:slide-out-to-left-16! z-50 p-1">
+                                            <ul
+                                                className={cn(
+                                                    link.type === "description"
+                                                        ? "min-w-64"
+                                                        : "min-w-48"
+                                                )}
                                             >
-                                                <div className="mb-2 mt-4 text-lg font-medium">
-                                                    Mes travaux
-                                                </div>
-                                                <p className="text-sm leading-tight text-muted-foreground">
-                                                    Retrouvez ici mes projets, mes créations et mes travaux universitaire.
-                                                </p>
-                                            </a>
-                                        </NavigationMenuLink>
-                                    </li>
-                                    <ListItem href="/docs" title="Ressources">
-                                        Documentation pour les ressources et les outils.
-                                    </ListItem>
-                                    <ListItem href="https://elouanb.fr" target="_blank" title="Portfolio">
-                                        Mon portfolio personnel.
-                                    </ListItem>
-                                </ul>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>Outils</NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                    {components.map((component) => (
-                                        <ListItem
-                                            key={component.title}
-                                            title={component.title}
-                                            href={component.href}
-                                        >
-                                            {component.description}
-                                        </ListItem>
-                                    ))}
-                                </ul>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
+                                                {link.items.map((item, itemIndex) => (
+                                                    <li key={itemIndex}>
+                                                        <NavigationMenuLink
+                                                            href={item.href}
+                                                            className="py-1.5"
+                                                        >
+                                                            {/* Display icon if present */}
+                                                            {link.type === "icon" && "icon" in item && (
+                                                                <div className="flex items-center gap-2">
+                                                                    {item.icon === "BookOpenIcon" && (
+                                                                        <BookOpenIcon
+                                                                            size={16}
+                                                                            className="text-foreground opacity-60"
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                    )}
+                                                                    {item.icon === "LifeBuoyIcon" && (
+                                                                        <LifeBuoyIcon
+                                                                            size={16}
+                                                                            className="text-foreground opacity-60"
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                    )}
+                                                                    {item.icon === "InfoIcon" && (
+                                                                        <InfoIcon
+                                                                            size={16}
+                                                                            className="text-foreground opacity-60"
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                    )}
+                                                                    <span>{item.label}</span>
+                                                                </div>
+                                                            )}
 
-                    <div className="flex items-center gap-2 ml-12">
-                        <Button asChild variant="link">
-                            <a href="https://elouanb.fr" target="_blank">
-                                elouanb.fr
-                                <ExternalLinkIcon/>
-                            </a>
-                        </Button>
+                                                            {/* Display label with description if present */}
+                                                            {link.type === "description" &&
+                                                            "description" in item ? (
+                                                                <div className="space-y-1">
+                                                                    <div className="font-medium">
+                                                                        {item.label}
+                                                                    </div>
+                                                                    <p className="text-muted-foreground line-clamp-2 text-xs">
+                                                                        {item.description}
+                                                                    </p>
+                                                                </div>
+                                                            ) : (
+                                                                // Display simple label if not icon or description type
+                                                                !link.type ||
+                                                                (link.type !== "icon" &&
+                                                                    link.type !== "description" && (
+                                                                        <span>{item.label}</span>
+                                                                    ))
+                                                            )}
+                                                        </NavigationMenuLink>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </NavigationMenuContent>
+                                    </>
+                                ) : (
+                                    <NavigationMenuLink
+                                        href={link.href}
+                                        className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                                    >
+                                        {link.label}
+                                    </NavigationMenuLink>
+                                )}
+                            </NavigationMenuItem>
+                        ))}
+                    </NavigationMenuList>
+                </NavigationMenu>
+            </nav>
+            <NavigationMenu>
+                <div className="items-center gap-2 ml-12 hidden md:flex">
+                    <Button asChild variant="link" className="hidden md:flex">
+                        <a href="https://elouanb.fr" target="_blank" className='text-xs'>
+                            elouanb.fr
+                            <ExternalLinkIcon className="!w-3" />
+                        </a>
+                    </Button>
+                    <div className="flex items-center">
                         <Button asChild variant="ghost" size="icon">
                             <a href="https://github.com/AloneDay-91" target="_blank">
                                 <GitHubLogoIcon />
                             </a>
                         </Button>
-                        <ThemeProvider>
-                            <ModeToggle />
-                        </ThemeProvider>
+                        <Button asChild variant="ghost" size="icon">
+                            <a href="https://www.linkedin.com/in/elouanbruzek/" target="_blank">
+                                <LinkedInLogoIcon />
+                            </a>
+                        </Button>
                     </div>
-                </NavigationMenu>
-            </nav>
+                    <ThemeProvider>
+                        <ModeToggle />
+                    </ThemeProvider>
+                </div>
+                <div className="flex md:hidden">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <Button variant="ghost" size="icon" className="rounded-full shadow-none">
+                                <EllipsisIcon size={16} aria-hidden="true" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="flex flex-col p-2">
+                            <div className="flex items-center flex-col">
+                                <Button asChild variant="ghost" size="icon">
+                                    <a href="https://github.com/AloneDay-91" target="_blank" className='text-xs w-full'>
+                                        Github
+                                        <GitHubLogoIcon />
+                                    </a>
+                                </Button>
+                                <Button asChild variant="ghost" size="icon">
+                                    <a href="https://www.linkedin.com/in/elouanbruzek/" target="_blank" className='text-xs w-full'>
+                                        LinkedIn
+                                        <LinkedInLogoIcon />
+                                    </a>
+                                </Button>
+                            </div>
+                            <Button asChild variant="link">
+                                <a href="https://elouanb.fr" target="_blank" className='text-xs w-full'>
+                                    elouanb.fr
+                                    <ExternalLinkIcon className="!w-3" />
+                                </a>
+                            </Button>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            </NavigationMenu>
         </header>
     )
 }
-
-const ListItem = React.forwardRef<
-    React.ElementRef<"a">,
-    React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-    return (
-        <li>
-            <NavigationMenuLink asChild>
-                <a
-                    ref={ref}
-                    className={cn(
-                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                        className
-                    )}
-                    {...props}
-                >
-                    <div className="text-sm font-medium leading-none">{title}</div>
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        {children}
-                    </p>
-                </a>
-            </NavigationMenuLink>
-        </li>
-    )
-})
-ListItem.displayName = "ListItem"

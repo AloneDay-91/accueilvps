@@ -1,6 +1,6 @@
 export default function ModalPub() {
     return (
-        <div className="fixed z-50 flex items-center justify-center bottom-6 right-12 w-64">
+        <div className="fixed z-50 items-center justify-center bottom-6 right-12 w-64 hidden md:flex">
             <div className="relative bg-background border rounded-lg flex flex-row items-center p-3 w-full">
                 <img
                     src="/img.png"
