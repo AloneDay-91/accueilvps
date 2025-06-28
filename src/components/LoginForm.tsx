@@ -7,6 +7,7 @@ import Layout from "@/components/Layout";
 import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-ellipsis-pattern";
 import { Badge } from "@/components/ui/badge";
 import { Input } from '@/components/ui/input';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ export const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +29,8 @@ export const LoginForm: React.FC = () => {
     const success = await login(email, password);
     if (!success) {
       setError('Email ou mot de passe incorrect');
+    } else {
+      navigate('/dashboard');
     }
   };
 
