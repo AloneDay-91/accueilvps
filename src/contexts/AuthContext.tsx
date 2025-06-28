@@ -103,7 +103,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const data = await response.json();
         setUser(data.user);
         setToken(data.token);
+        setIsAuthenticated(true);
         localStorage.setItem('authToken', data.token);
+        console.log('✅ AuthContext: Connexion réussie, utilisateur authentifié');
         return true;
       } else {
         const errorData = await response.json();
@@ -122,7 +124,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = () => {
     setUser(null);
     setToken(null);
+    setIsAuthenticated(false);
     localStorage.removeItem('authToken');
+    console.log('🚪 AuthContext: Déconnexion effectuée, rafraîchissement de la page');
+    window.location.reload();
   };
 
   const value: AuthContextType = {

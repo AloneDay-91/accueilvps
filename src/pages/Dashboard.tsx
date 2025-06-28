@@ -18,6 +18,7 @@ import {
 import Layout from "@/components/Layout";
 import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-ellipsis-pattern";
 import { ProjectManager } from '@/components/ProjectManager';
+import { AuthNavbar } from '@/components/AuthNavbar';
 import { projectService } from '@/services/projectService';
 import { analyticsService, AnalyticsOverview, SystemStatus } from '@/services/analyticsService';
 import { ProjectItem } from '@/types/projects';
@@ -400,6 +401,11 @@ export const Dashboard: React.FC = () => {
 
   return (
     <Layout>
+      {/* Affichage de la navbar d'authentification */}
+      <div className="fixed top-4 right-4 z-50">
+        <AuthNavbar />
+      </div>
+      
       <GridPatternCard>
         <GridPatternCardBody>
           <Badge variant="outline" className="mb-1 text-[9px]">
