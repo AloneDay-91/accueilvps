@@ -11,13 +11,13 @@ import {ModeToggle} from "@/components/mode-toggle.tsx";
 import {cn} from "@/lib/utils.ts";
 import {ComponentBooleanIcon} from "@radix-ui/react-icons";
 import {Badge} from "@/components/ui/badge.tsx";
-import {BookOpenIcon, EllipsisIcon, InfoIcon, LifeBuoyIcon} from "lucide-react";
+import {BookOpenIcon, EllipsisIcon, InfoIcon, LifeBuoyIcon, BarChart3} from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { useAuth } from '@/contexts/AuthContext';
 
 const navigationLinks = [
     { href: "/", label: "Accueil" },
@@ -51,6 +51,8 @@ const navigationLinks = [
 ]
 
 export function Navbar() {
+    const { isAuthenticated } = useAuth();
+
     return (
         <header className="flex items-center justify-between w-full max-w-4xl mx-auto h-16 z-40 border-x px-4 bg-background">
             <div>
@@ -153,6 +155,18 @@ export function Navbar() {
                                 )}
                             </NavigationMenuItem>
                         ))}
+                        
+                        {/* Bouton Dashboard pour les utilisateurs connectés */}
+                        {isAuthenticated && (
+                            <NavigationMenuItem>
+                                <NavigationMenuLink
+                                    href="/dashboard"
+                                    className="text-muted-foreground hover:text-primary py-1.5 font-medium flex items-center gap-2"
+                                >
+                                    Dashboard
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                        )}
                     </NavigationMenuList>
                 </NavigationMenu>
             </nav>
@@ -208,6 +222,15 @@ export function Navbar() {
                                     <ExternalLinkIcon className="!w-3" />
                                 </a>
                             </Button>
+                            {/* Bouton Dashboard mobile pour les utilisateurs connectés */}
+                            {isAuthenticated && (
+                                <Button asChild variant="ghost" size="icon">
+                                    <a href="/dashboard" className='text-xs w-full flex items-center gap-2'>
+                                        <BarChart3 className="w-4 h-4" />
+                                        Dashboard
+                                    </a>
+                                </Button>
+                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

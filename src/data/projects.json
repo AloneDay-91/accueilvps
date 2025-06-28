@@ -1,0 +1,216 @@
+{
+  "items": [
+    {
+      "id": "r112",
+      "semestre": "Semestre 1",
+      "title": "R112 - Intégration",
+      "description": "Travaux en intégration",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Batman",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence1"
+        },
+        "project2": {
+          "title": "Séquence 2",
+          "description": "Yoko's Kitchen",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence2"
+        },
+        "project3": {
+          "title": "Séquence 3",
+          "description": "Mr Potato",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence3"
+        },
+        "project4": {
+          "title": "Séquence 4",
+          "description": "John Doe",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence4"
+        },
+        "project5": {
+          "title": "Séquence 5",
+          "description": "Arboretum",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence5"
+        },
+        "project6": {
+          "title": "Séquence 6",
+          "description": "Gamers",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r112/sequence6"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 1",
+      "id": "r113",
+      "title": "R113 - Développement",
+      "description": "Travaux en développement",
+      "content": {
+        "project1": {
+          "title": "Aucun projet",
+          "description": "Aucun projet n'est disponible pour le moment.",
+          "link": "#"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 2",
+      "id": "r212",
+      "title": "R212 - Intégration",
+      "description": "Travaux en intégration",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Monopoly",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence1/monopoly.html"
+        },
+        "project2": {
+          "title": "Séquence 2",
+          "description": "Hony Tawk",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence2"
+        },
+        "project3": {
+          "title": "Séquence 3",
+          "description": "Calculatrice",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence3"
+        },
+        "project4": {
+          "title": "Séquence 4",
+          "description": "TD JavaScript",
+          "links": [
+            "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice1.html",
+            "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice2.html",
+            "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence4/exercice3.html"
+          ]
+        },
+        "project5": {
+          "title": "Séquence 5",
+          "description": "Parallax",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence5"
+        },
+        "project6": {
+          "title": "Séquence 6",
+          "description": "Wow.js",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r212/sequence6"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 2",
+      "id": "r213",
+      "title": "R213 - Développement",
+      "description": "Travaux en développement",
+      "content": {
+        "project1": {
+          "title": "Aucun projet",
+          "description": "Aucun projet n'est disponible pour le moment.",
+          "link": "#"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 2",
+      "id": "r203",
+      "title": "R203 - Accessibilité",
+      "description": "Travaux en accessibilité",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Réservation",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r203/sequence1"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 3",
+      "id": "r312",
+      "title": "R312 - Intégration",
+      "description": "Travaux en intégration",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Toy Story",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence1/index.html"
+        },
+        "project2": {
+          "title": "Séquence 2",
+          "description": "Chat",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence2/index.html"
+        },
+        "project3": {
+          "title": "Séquence 3",
+          "description": "Drag",
+          "link": "http://mmi23f03.mmi-troyes.fr/travaux/r312/sequence3/exo2.html"
+        },
+        "project4": {
+          "title": "SASS/SCSS",
+          "description": "Café",
+          "link": "http://mmi23f03.mmi-troyes.fr/scss/"
+        }
+      }
+    },
+    {
+      "id": "r319",
+      "semestre": "Semestre 3",
+      "title": "R319 - Symfony",
+      "description": "Travaux en Symfony",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "MMIPLE",
+          "link": "https://github.com/AloneDay-91/mmiple"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 4",
+      "id": "r405",
+      "title": "R405 - Création et design intéractif",
+      "description": "Travaux en création et design intéractif",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Three.js",
+          "link": "https://mmi23f03.mmi-troyes.fr/"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 4",
+      "id": "r406",
+      "title": "R406 - Développement front",
+      "description": "Travaux en développement front",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Vue.js",
+          "link": "https://github.com/AloneDay-91/vuejsdemo"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 4",
+      "id": "r407",
+      "title": "R407 - Développement back",
+      "description": "Travaux en développement back",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "MMIPLE V2",
+          "link": "https://github.com/AloneDay-91/mmiple-S4"
+        }
+      }
+    },
+    {
+      "semestre": "Semestre 4",
+      "id": "r409",
+      "title": "R409 - Unity",
+      "description": "Travaux en Unity",
+      "content": {
+        "project1": {
+          "title": "Séquence 1",
+          "description": "Bowling",
+          "link": "http://mmi23f03.mmi-troyes.fr/bowling/"
+        }
+      }
+    }
+  ]
+}

@@ -21,12 +21,23 @@ export const HomePage: React.FC = () => {
     const fetchProjects = async () => {
       try {
         console.log('🔄 Début du chargement des données...');
+        console.log('🔐 Utilisateur connecté:', isAuthenticated);
         setLoading(true);
         setError(null);
         
-        const projectsData = await projectService.getAllProjects();
-        console.log('✅ Projets récupérés:', projectsData);
+        let projectsData: ProjectItem[];
         
+        if (isAuthenticated) {
+          // Utilisateur connecté : utiliser la route protégée
+          console.log('🔑 Utilisation de la route protégée');
+          projectsData = await projectService.getAllProjects();
+        } else {
+          // Utilisateur non connecté : utiliser la route publique
+          console.log('🌐 Utilisation de la route publique');
+          projectsData = await projectService.getPublicProjects();
+        }
+        
+        console.log('✅ Projets récupérés:', projectsData);
         setProjects(projectsData);
       } catch (err) {
         console.error('❌ Erreur lors du chargement des données:', err);
@@ -37,7 +48,7 @@ export const HomePage: React.FC = () => {
     };
 
     fetchProjects();
-  }, []);
+  }, [isAuthenticated]); // Recharger quand l'état d'authentification change
 
   // Grouper les projets par semestre
   const semestres = Array.from(new Set(projects.map(item => item.semestre)));
@@ -109,6 +120,13 @@ export const HomePage: React.FC = () => {
             utiles. N'hésitez pas à explorer les différentes sections pour en savoir plus sur moi et
             mon travail.
           </p>
+          {!isAuthenticated && (
+            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
+                💡 <strong>Conseil :</strong> Connectez-vous pour accéder à la gestion des projets et à plus de fonctionnalités !
+              </p>
+            </div>
+          )}
         </GridPatternCardBody>
       </GridPatternCard>
       
