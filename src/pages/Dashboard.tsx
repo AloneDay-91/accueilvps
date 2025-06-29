@@ -9,11 +9,7 @@ import {
   Database,
   Server,
   FolderOpen,
-  Eye,
-  Clock,
   RefreshCw,
-  Globe,
-  Edit
 } from 'lucide-react';
 import Layout from "@/components/Layout";
 import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-ellipsis-pattern";
@@ -24,16 +20,31 @@ import { analyticsService, AnalyticsOverview, SystemStatus } from '@/services/an
 import { ProjectItem } from '@/types/projects';
 import {
   Tabs,
-  TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { EyeOpenIcon, Pencil2Icon, ClockIcon, GlobeIcon } from '@radix-ui/react-icons';
+import { MoreHorizontal, ExternalLink, Trash2 } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("overview");
   
   // Données analytiques réelles
   const [overview, setOverview] = useState<AnalyticsOverview | null>(null);
@@ -134,8 +145,8 @@ export const Dashboard: React.FC = () => {
       {/* Stats Cards */}
       <Card variant="plus" className="bg-background mt-6">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold">Statistiques en temps réel</h2>
+          <div className="flex flex-col md:flex-row gap-2 items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-semibold">Statistiques en temps réel</h2>
             <Button 
               variant="outline" 
               size="sm" 
@@ -226,10 +237,10 @@ export const Dashboard: React.FC = () => {
         {/* Statut système */}
         <Card variant="plus" className="lg:col-span-2 bg-background">
           <CardContent className="p-6">
-            <h2 className="text-xl font-bold mb-4">Statut système</h2>
+            <h2 className="text-lg md:text-xl font-semibold mb-4">Statut système</h2>
             <div className="space-y-4">
               <Card variant="default">
-                <div className='flex flex-row items-center justify-between'>
+                <div className='flex flex-col gap-2 md:flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
                     <Database className="w-5 h-5 text-blue-600" />
                     <span className="text-sm font-medium">Base de données</span>
@@ -242,7 +253,7 @@ export const Dashboard: React.FC = () => {
               </Card>
               
               <Card variant='default'>
-                <div className='flex flex-row items-center justify-between'>
+                <div className='flex flex-col gap-2 md:flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
                     <Server className="w-5 h-5 text-green-600" />
                     <span className="text-sm font-medium">Serveur API</span>
@@ -255,9 +266,9 @@ export const Dashboard: React.FC = () => {
               </Card>
               
               <Card variant='default'>
-              <div className='flex flex-row items-center justify-between'>
+              <div className='flex flex-col gap-2 md:flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
-                    <Globe className="w-5 h-5 text-purple-600" />
+                    <GlobeIcon className="w-5 h-5 text-purple-600" />
                     <span className="text-sm font-medium">API Frontend</span>
                   </div>
                   <Badge variant="outline" className={getStatusColor(systemStatus?.api || 'Hors ligne')}>
@@ -267,7 +278,7 @@ export const Dashboard: React.FC = () => {
               </div>
               </Card>
 
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <Card variant='default'>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">CPU</span>
@@ -298,7 +309,7 @@ export const Dashboard: React.FC = () => {
               <Card variant='default'>
                 <div className='flex flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-purple-600" />
+                    <ClockIcon className="w-5 h-5 text-purple-600" />
                     <span className="text-sm font-medium">Uptime</span>
                   </div>
                   <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -321,29 +332,60 @@ export const Dashboard: React.FC = () => {
               size="sm"
               className="flex items-center gap-2 text-xs"
             >
-              <Eye className="w-4 h-4" />
+              <EyeOpenIcon className="w-4 h-4" />
               Voir tous
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {projects.slice(0, 6).map((project) => (
               <div key={project.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex md:flex-row flex-col-reverse flex-col gap-2 items-start justify-between mb-2">
                   <h3 className="font-semibold text-sm truncate">{project.title}</h3>
-                  <Badge variant="outline" className="text-xs">{project.semestre}</Badge>
+                  <div className="flex items-center justify-between gap-2 w-full">
+                    <Badge variant="outline" className="text-xs">{project.semestre}</Badge>
+                    
+                    {/* Dropdown pour mobile */}
+                    <div className="md:hidden">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <MoreHorizontal className="h-3 w-3" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>
+                            <Pencil2Icon className="w-3 h-3 mr-2" />
+                            Modifier
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <ExternalLink className="w-3 h-3 mr-2" />
+                            Voir le projet
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-red-600">
+                            <Trash2 className="w-3 h-3 mr-2" />
+                            Supprimer
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
                 </div>
                 <p className="text-xs text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                   {project.description}
                 </p>
                 <div className="flex items-center justify-between text-xs text-gray-500">
                   <span>{Object.keys(project.content).length} projet(s)</span>
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    className="text-xs"
-                  >
-                    <Edit className="w-3 h-3" />
-                  </Button>
+                  
+                  {/* Bouton edit pour desktop */}
+                  <div className="hidden md:block">
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      className="text-xs"
+                    >
+                      <Pencil2Icon className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -425,46 +467,73 @@ export const Dashboard: React.FC = () => {
         </GridPatternCardBody>
       </GridPatternCard>
 
-      {/* Onglets */}
+      {/* Interface responsive : Select sur mobile, Tabs sur desktop */}
       <Card variant="plus" className="bg-background mt-6">
         <CardContent className="p-6">
-          <Tabs defaultValue="overview" className="items-center">
-            <TabsList className="h-auto rounded-none border-b bg-transparent p-0">
-              <TabsTrigger
-                value="overview"
-                className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
-              >
-                <BarChart3 className="w-4 h-4" />
-                Vue d'ensemble
-              </TabsTrigger>
-              <TabsTrigger
-                value="projects"
-                className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
-              >
-                <FolderOpen className="w-4 h-4" />
-                Gestion des projets
-              </TabsTrigger>
-              <TabsTrigger
-                value="settings"
-                className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
-              >
-                <Edit className="w-4 h-4" />
-                Paramètres
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="overview">
-              {renderOverviewTab()}
-            </TabsContent>
-            
-            <TabsContent value="projects">
-              {renderProjectsTab()}
-            </TabsContent>
-            
-            <TabsContent value="settings">
-              {renderSettingsTab()}
-            </TabsContent>
-          </Tabs>
+          {/* Select pour mobile */}
+          <div className="md:hidden mb-4">
+            <Select value={activeTab} onValueChange={setActiveTab}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sélectionner une section" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="overview">
+                  <div className="flex items-center gap-2">
+                    <BarChart3 className="w-4 h-4" />
+                    Vue d'ensemble
+                  </div>
+                </SelectItem>
+                <SelectItem value="projects">
+                  <div className="flex items-center gap-2">
+                    <FolderOpen className="w-4 h-4" />
+                    Gestion des projets
+                  </div>
+                </SelectItem>
+                <SelectItem value="settings">
+                  <div className="flex items-center gap-2">
+                    <Pencil2Icon className="w-4 h-4" />
+                    Paramètres
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Tabs pour desktop */}
+          <div className="hidden md:block">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="items-center">
+              <TabsList className="h-auto rounded-none border-b bg-transparent p-0">
+                <TabsTrigger
+                  value="overview"
+                  className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  Vue d'ensemble
+                </TabsTrigger>
+                <TabsTrigger
+                  value="projects"
+                  className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
+                >
+                  <FolderOpen className="w-4 h-4" />
+                  Gestion des projets
+                </TabsTrigger>
+                <TabsTrigger
+                  value="settings"
+                  className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
+                >
+                  <Pencil2Icon className="w-4 h-4" />
+                  Paramètres
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+          
+          {/* Contenu des sections */}
+          <div className="mt-6">
+            {activeTab === "overview" && renderOverviewTab()}
+            {activeTab === "projects" && renderProjectsTab()}
+            {activeTab === "settings" && renderSettingsTab()}
+          </div>
         </CardContent>
       </Card>
     </Layout>

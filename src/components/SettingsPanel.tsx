@@ -28,7 +28,7 @@ export const SettingsPanel: React.FC = () => {
           <SettingsIcon className="w-4 h-4" />
           <h2 className="text-md font-md">Paramètres</h2>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           <div>
             <h3 className="font-normal text-sm">Modal de publicité</h3>
             <p className="text-xs text-muted-foreground">

@@ -11,20 +11,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useProgressToast } from '@/contexts/ProgressToastContext';
 import { 
-  Plus, 
-  Edit, 
-  Trash2, 
+  Plus,
   Save, 
   X, 
-  Eye,
-  EyeOff,
   Loader2,
-  AlertTriangle
+  AlertTriangle,
+  MoreHorizontal
 } from 'lucide-react';
 import { ProjectItem } from '@/types/projects';
 import { projectService, CreateProjectData } from '@/services/projectService';
+
+import { EyeOpenIcon, EyeClosedIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 
 interface ProjectManagerProps {
   onProjectsChange?: () => void;
@@ -215,9 +220,14 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
       {/* En-tête */}
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Gestion des projets</h2>
-        <Button size='sm' onClick={handleCreate} className="flex items-center gap-2 text-xs">
+        <Button size='sm' onClick={handleCreate} className="hidden md:flex items-center gap-2 text-xs">
           <Plus className="w-4 h-4" />
           Nouveau projet
+        </Button>
+
+        {/** VERSION MOBILE */}
+        <Button size='icon' onClick={handleCreate} className=" md:hidden text-xs">
+          <Plus className="w-2 h-2" />
         </Button>
       </div>
 
@@ -233,7 +243,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
         <Card className="border-2 border-blue-400 dark:border-blue-400">
           <CardContent className="p-6">
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-md md:text-lg font-semibold">
                 {isCreating ? 'Nouveau projet' : 'Modifier le projet'}
               </h3>
               
@@ -245,6 +255,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                     value={editingProject.semestre}
                     onChange={(e) => updateEditingProject('semestre', e.target.value)}
                     placeholder="Semestre 1"
+                    className='text-sm md:text-md'
                   />
                 </div>
                 <div>
@@ -253,6 +264,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                     value={editingProject.title}
                     onChange={(e) => updateEditingProject('title', e.target.value)}
                     placeholder="R112 - Intégration"
+                    className='text-sm md:text-md'
                   />
                 </div>
                 <div>
@@ -261,19 +273,31 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                     value={editingProject.description}
                     onChange={(e) => updateEditingProject('description', e.target.value)}
                     placeholder="Travaux en intégration"
+                    className='text-sm md:text-md'
                   />
                 </div>
               </div>
 
               {/* Projets du content */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium">Projets</h4>
+              <div className="space-y-4 flex flex-col md:flex-col flex-col-reverse gap-2 items-center md:w-full">
+                <div className="flex items-center justify-center md:justify-between w-full">
+                  <h4 className="font-medium md:flex hidden">Projets</h4>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     onClick={addProjectToContent}
-                    className="flex items-center gap-2 text-xs"
+                    className="hidden md:flex items-center gap-2 text-xs"
+                  >
+                    <Plus className="w-3 h-3" />
+                    Ajouter un projet
+                  </Button>
+
+                  {/** VERSION MOBILE */}
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={addProjectToContent}
+                    className="md:hidden flex items-center gap-2 text-xs"
                   >
                     <Plus className="w-3 h-3" />
                     Ajouter un projet
@@ -281,7 +305,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                 </div>
 
                 {Object.entries(editingProject.content).map(([key, project]) => (
-                  <div key={key} className="border rounded-lg p-4 space-y-3">
+                  <div key={key} className="border rounded-lg p-4 space-y-3 w-full">
                     <div className="flex items-center justify-between">
                       <h5 className="font-medium">{key}</h5>
                       <Button
@@ -290,7 +314,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                         onClick={() => removeProjectFromContent(key)}
                         className="text-red-600 hover:text-red-700"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <TrashIcon className="w-4 h-4" />
                       </Button>
                     </div>
                     
@@ -301,6 +325,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                           value={project.title}
                           onChange={(e) => updateProjectContent(key, 'title', e.target.value)}
                           placeholder="Séquence 1"
+                          className='text-sm md:text-md'
                         />
                       </div>
                       <div>
@@ -309,6 +334,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                           value={project.description}
                           onChange={(e) => updateProjectContent(key, 'description', e.target.value)}
                           placeholder="Description du projet"
+                          className='text-sm md:text-md'
                         />
                       </div>
                     </div>
@@ -319,6 +345,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                         value={project.link || ''}
                         onChange={(e) => updateProjectContent(key, 'link', e.target.value)}
                         placeholder="https://example.com"
+                        className='text-sm md:text-md'
                       />
                     </div>
                   </div>
@@ -326,12 +353,12 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
               </div>
 
               {/* Boutons d'action */}
-              <div className="flex gap-3 pt-4">
-                <Button variant="default" size="sm" onClick={handleSave} className="flex items-center gap-2 text-xs">
+              <div className="flex gap-3 pt-4 w-full">
+                <Button variant="default" size="sm" onClick={handleSave} className="flex items-center gap-2 text-xs md:w-auto w-full">
                   <Save className="w-4 h-4" />
                   Sauvegarder
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleCancel} className="flex items-center gap-2 text-xs">
+                <Button variant="outline" size="sm" onClick={handleCancel} className="flex items-center gap-2 text-xs md:w-auto w-full">
                   <X className="w-4 h-4" />
                   Annuler
                 </Button>
@@ -346,9 +373,9 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
         {projects.map((project) => (
           <Card key={project.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-4">
-              <div className="flex items-start justify-between">
+              <div className="flex items-center md:items-start justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex flex-col flex-col-reverse md:flex-row items-start md:items-center gap-3 mb-2">
                     <h3 className="font-semibold">{project.title}</h3>
                     <Badge variant="outline">{project.semestre}</Badge>
                   </div>
@@ -361,38 +388,86 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowContent(prev => ({ 
-                      ...prev, 
-                      [project.id]: !prev[project.id] 
-                    }))}
-                  >
-                    {showContent[project.id] ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleEdit(project)}
-                  >
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setProjectToDelete(project);
-                      setDeleteDialogOpen(true);
-                    }}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                  {/* Version desktop - boutons visibles */}
+                  <div className="hidden md:flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowContent(prev => ({ 
+                        ...prev, 
+                        [project.id]: !prev[project.id] 
+                      }))}
+                    >
+                      {showContent[project.id] ? (
+                        <EyeClosedIcon className="w-4 h-4" />
+                      ) : (
+                        <EyeOpenIcon className="w-4 h-4" />
+                      )}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(project)}
+                    >
+                      <Pencil2Icon className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setProjectToDelete(project);
+                        setDeleteDialogOpen(true);
+                      }}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      <TrashIcon className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  {/* Version mobile - dropdown */}
+                  <div className="md:hidden">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => setShowContent(prev => ({ 
+                            ...prev, 
+                            [project.id]: !prev[project.id] 
+                          }))}
+                        >
+                          {showContent[project.id] ? (
+                            <>
+                              <EyeClosedIcon className="w-4 h-4 mr-2" />
+                              Masquer les détails
+                            </>
+                          ) : (
+                            <>
+                              <EyeOpenIcon className="w-4 h-4 mr-2" />
+                              Voir les détails
+                            </>
+                          )}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleEdit(project)}>
+                          <Pencil2Icon className="w-4 h-4 mr-2" />
+                          Modifier
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setProjectToDelete(project);
+                            setDeleteDialogOpen(true);
+                          }}
+                          className="text-red-600 focus:text-red-600"
+                        >
+                          <TrashIcon className="w-4 h-4 mr-2" />
+                          Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </div>
 
