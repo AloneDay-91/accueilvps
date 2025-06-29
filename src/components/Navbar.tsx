@@ -11,10 +11,13 @@ import {ModeToggle} from "@/components/mode-toggle.tsx";
 import {cn} from "@/lib/utils.ts";
 import {ComponentBooleanIcon} from "@radix-ui/react-icons";
 import {Badge} from "@/components/ui/badge.tsx";
-import {BookOpenIcon, EllipsisIcon, InfoIcon, LifeBuoyIcon, BarChart3} from "lucide-react";
+import {BookOpenIcon, EllipsisIcon, InfoIcon, LifeBuoyIcon, BarChart3, User, Shield, LogOut} from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuth } from '@/contexts/AuthContext';
@@ -51,7 +54,7 @@ const navigationLinks = [
 ]
 
 export function Navbar() {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user, logout } = useAuth();
 
     return (
         <header className="flex items-center justify-between w-full max-w-4xl mx-auto h-16 z-40 border-x px-4 bg-background">
@@ -172,24 +175,67 @@ export function Navbar() {
             </nav>
             <NavigationMenu>
                 <div className="items-center gap-2 ml-12 hidden md:flex">
-                    <Button asChild variant="link" className="hidden md:flex">
-                        <a href="https://elouanb.fr" target="_blank" className='text-xs'>
-                            elouanb.fr
-                            <ExternalLinkIcon className="!w-3" />
-                        </a>
-                    </Button>
-                    <div className="flex items-center">
-                        <Button asChild variant="ghost" size="icon">
-                            <a href="https://github.com/AloneDay-91" target="_blank">
-                                <GitHubLogoIcon />
-                            </a>
-                        </Button>
-                        <Button asChild variant="ghost" size="icon">
-                            <a href="https://www.linkedin.com/in/elouanbruzek/" target="_blank">
-                                <LinkedInLogoIcon />
-                            </a>
-                        </Button>
-                    </div>
+                    {/* Menu administrateur quand connecté, liens externes quand non connecté */}
+                    {isAuthenticated ? (
+                        <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-xs">
+                                <Shield className="w-3 h-3 mr-1" />
+                                Administrateur
+                            </Badge>
+                            
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                        <User className="h-4 w-4" />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-56">
+                                    <DropdownMenuLabel className="font-normal">
+                                        <div className="flex flex-col space-y-1">
+                                            <p className="text-sm font-medium leading-none">{user?.name}</p>
+                                            <p className="text-xs leading-none text-muted-foreground">
+                                                {user?.email}
+                                            </p>
+                                        </div>
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem className="flex items-center gap-2">
+                                        <Shield className="w-4 h-4" />
+                                        <span>Rôle: {user?.role}</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem 
+                                        onClick={logout}
+                                        className="flex items-center gap-2 text-red-600 dark:text-red-400"
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        <span>Se déconnecter</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
+                    ) : (
+                        <>
+                            <Button asChild variant="link" className="hidden md:flex">
+                                <a href="https://elouanb.fr" target="_blank" className='text-xs'>
+                                    elouanb.fr
+                                    <ExternalLinkIcon className="!w-3" />
+                                </a>
+                            </Button>
+                            <div className="flex items-center">
+                                <Button asChild variant="ghost" size="icon">
+                                    <a href="https://github.com/AloneDay-91" target="_blank">
+                                        <GitHubLogoIcon />
+                                    </a>
+                                </Button>
+                                <Button asChild variant="ghost" size="icon">
+                                    <a href="https://www.linkedin.com/in/elouanbruzek/" target="_blank">
+                                        <LinkedInLogoIcon />
+                                    </a>
+                                </Button>
+                            </div>
+                        </>
+                    )}
                     <ThemeProvider>
                         <ModeToggle />
                     </ThemeProvider>
@@ -202,26 +248,54 @@ export function Navbar() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="flex flex-col p-2">
-                            <div className="flex items-center flex-col">
-                                <Button asChild variant="ghost" size="icon">
-                                    <a href="https://github.com/AloneDay-91" target="_blank" className='text-xs w-full'>
-                                        Github
-                                        <GitHubLogoIcon />
-                                    </a>
-                                </Button>
-                                <Button asChild variant="ghost" size="icon">
-                                    <a href="https://www.linkedin.com/in/elouanbruzek/" target="_blank" className='text-xs w-full'>
-                                        LinkedIn
-                                        <LinkedInLogoIcon />
-                                    </a>
-                                </Button>
-                            </div>
-                            <Button asChild variant="link">
-                                <a href="https://elouanb.fr" target="_blank" className='text-xs w-full'>
-                                    elouanb.fr
-                                    <ExternalLinkIcon className="!w-3" />
-                                </a>
-                            </Button>
+                            {/* Menu administrateur mobile quand connecté, liens externes quand non connecté */}
+                            {isAuthenticated ? (
+                                <>
+                                    <div className="flex items-center flex-col mb-2">
+                                        <Badge variant="outline" className="text-xs mb-2">
+                                            <Shield className="w-3 h-3 mr-1" />
+                                            Administrateur
+                                        </Badge>
+                                        <p className="text-xs text-muted-foreground">{user?.name}</p>
+                                    </div>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem className="flex items-center gap-2">
+                                        <Shield className="w-4 h-4" />
+                                        <span className="text-xs">Rôle: {user?.role}</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem 
+                                        onClick={logout}
+                                        className="flex items-center gap-2 text-red-600 dark:text-red-400"
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        <span className="text-xs">Se déconnecter</span>
+                                    </DropdownMenuItem>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="flex items-center flex-col">
+                                        <Button asChild variant="ghost" size="icon">
+                                            <a href="https://github.com/AloneDay-91" target="_blank" className='text-xs w-full'>
+                                                Github
+                                                <GitHubLogoIcon />
+                                            </a>
+                                        </Button>
+                                        <Button asChild variant="ghost" size="icon">
+                                            <a href="https://www.linkedin.com/in/elouanbruzek/" target="_blank" className='text-xs w-full'>
+                                                LinkedIn
+                                                <LinkedInLogoIcon />
+                                            </a>
+                                        </Button>
+                                    </div>
+                                    <Button asChild variant="link">
+                                        <a href="https://elouanb.fr" target="_blank" className='text-xs w-full'>
+                                            elouanb.fr
+                                            <ExternalLinkIcon className="!w-3" />
+                                        </a>
+                                    </Button>
+                                </>
+                            )}
                             {/* Bouton Dashboard mobile pour les utilisateurs connectés */}
                             {isAuthenticated && (
                                 <Button asChild variant="ghost" size="icon">

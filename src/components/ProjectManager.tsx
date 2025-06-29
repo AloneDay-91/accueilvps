@@ -3,6 +3,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { useProgressToast } from '@/contexts/ProgressToastContext';
 import { 
   Plus, 
   Edit, 
@@ -11,7 +20,8 @@ import {
   X, 
   Eye,
   EyeOff,
-  Loader2
+  Loader2,
+  AlertTriangle
 } from 'lucide-react';
 import { ProjectItem } from '@/types/projects';
 import { projectService, CreateProjectData } from '@/services/projectService';
@@ -27,6 +37,13 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
   const [editingProject, setEditingProject] = useState<ProjectItem | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [showContent, setShowContent] = useState<{ [key: string]: boolean }>({});
+  
+  // États pour la confirmation de suppression
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<ProjectItem | null>(null);
+
+  // Hook pour les toasts avec barre de progression
+  const { success, error: showError } = useProgressToast();
 
   // Charger les projets
   const loadProjects = async () => {
@@ -76,35 +93,59 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
 
   // Supprimer un projet
   const handleDelete = async (id: string) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) {
-      return;
-    }
-
     try {
       await projectService.deleteProject(id);
       await loadProjects();
       onProjectsChange?.();
+      success("Projet supprimé avec succès");
     } catch (err) {
-      setError('Erreur lors de la suppression');
+      const errorMessage = 'Erreur lors de la suppression';
+      setError(errorMessage);
+      showError(errorMessage);
       console.error(err);
     }
+  };
+
+  // Confirmer la suppression
+  const confirmDelete = async () => {
+    if (!projectToDelete) return;
+    
+    await handleDelete(projectToDelete.id);
+    setDeleteDialogOpen(false);
+    setProjectToDelete(null);
+  };
+
+  // Annuler la suppression
+  const cancelDelete = () => {
+    setDeleteDialogOpen(false);
+    setProjectToDelete(null);
   };
 
   // Sauvegarder un projet
   const handleSave = async () => {
     if (!editingProject) return;
 
+    console.log('💾 handleSave appelé, isCreating:', isCreating);
+
     try {
       const validation = projectService.validateProjectData(editingProject);
       if (!validation.isValid) {
-        setError(validation.errors.join(', '));
+        const errorMessage = validation.errors.join(', ');
+        setError(errorMessage);
+        showError(errorMessage);
         return;
       }
 
       if (isCreating) {
+        console.log('💾 Création du projet...');
         await projectService.createProject(editingProject);
+        console.log('💾 Projet créé, appel de success()');
+        success("Projet créé avec succès");
       } else {
+        console.log('💾 Modification du projet...');
         await projectService.updateProject(editingProject.id, editingProject);
+        console.log('💾 Projet modifié, appel de success()');
+        success("Projet modifié avec succès");
       }
 
       setEditingProject(null);
@@ -113,7 +154,9 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
       onProjectsChange?.();
       setError(null);
     } catch (err) {
-      setError('Erreur lors de la sauvegarde');
+      const errorMessage = 'Erreur lors de la sauvegarde';
+      setError(errorMessage);
+      showError(errorMessage);
       console.error(err);
     }
   };
@@ -172,7 +215,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
       {/* En-tête */}
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Gestion des projets</h2>
-        <Button onClick={handleCreate} className="flex items-center gap-2">
+        <Button size='sm' onClick={handleCreate} className="flex items-center gap-2 text-xs">
           <Plus className="w-4 h-4" />
           Nouveau projet
         </Button>
@@ -187,7 +230,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
 
       {/* Formulaire d'édition */}
       {editingProject && (
-        <Card className="border-2 border-blue-200 dark:border-blue-800">
+        <Card className="border-2 border-blue-400 dark:border-blue-400">
           <CardContent className="p-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">
@@ -230,7 +273,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                     variant="outline" 
                     size="sm" 
                     onClick={addProjectToContent}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 text-xs"
                   >
                     <Plus className="w-3 h-3" />
                     Ajouter un projet
@@ -284,11 +327,11 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
 
               {/* Boutons d'action */}
               <div className="flex gap-3 pt-4">
-                <Button onClick={handleSave} className="flex items-center gap-2">
+                <Button variant="default" size="sm" onClick={handleSave} className="flex items-center gap-2 text-xs">
                   <Save className="w-4 h-4" />
                   Sauvegarder
                 </Button>
-                <Button variant="outline" onClick={handleCancel} className="flex items-center gap-2">
+                <Button variant="outline" size="sm" onClick={handleCancel} className="flex items-center gap-2 text-xs">
                   <X className="w-4 h-4" />
                   Annuler
                 </Button>
@@ -342,7 +385,10 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleDelete(project.id)}
+                    onClick={() => {
+                      setProjectToDelete(project);
+                      setDeleteDialogOpen(true);
+                    }}
                     className="text-red-600 hover:text-red-700"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -355,7 +401,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                 <div className="mt-4 pt-4 border-t">
                   <div className="space-y-2">
                     {Object.entries(project.content).map(([key, content]) => (
-                      <div key={key} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                      <div key={key} className="flex items-center justify-between p-2 border bg-background rounded hover:bg-muted rounded-lg">
                         <div>
                           <span className="font-medium text-sm">{content.title}</span>
                           <p className="text-xs text-gray-600 dark:text-gray-400">
@@ -367,7 +413,7 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
                             href={content.link} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-700 text-xs"
+                            className="text-blue-600 hover:text-blue-700 text-xs hover:underline"
                           >
                             Voir →
                           </a>
@@ -381,6 +427,30 @@ export const ProjectManager: React.FC<ProjectManagerProps> = ({ onProjectsChange
           </Card>
         ))}
       </div>
+
+      {/* Dialog de confirmation de suppression */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-500" />
+              Confirmer la suppression
+            </DialogTitle>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir supprimer le projet <strong>"{projectToDelete?.title}"</strong> ? 
+              Cette action est irréversible.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={cancelDelete} className="text-xs">
+              Annuler
+            </Button>
+            <Button variant="destructive" size="sm" onClick={confirmDelete} className="text-xs">
+              Supprimer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }; 

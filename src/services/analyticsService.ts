@@ -17,9 +17,9 @@ export interface AnalyticsOverview {
 }
 
 export interface SystemStatus {
-  database: 'online' | 'offline' | 'warning';
-  server: 'online' | 'offline' | 'warning';
-  api: 'online' | 'offline' | 'warning';
+  database: 'En ligne' | 'Hors ligne' | 'Attention';
+  server: 'En ligne' | 'Hors ligne' | 'Attention';
+  api: 'En ligne' | 'Hors ligne' | 'Attention';
   memoryUsage: number;
   cpuUsage: number;
   uptime: string;

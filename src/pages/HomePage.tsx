@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AuthNavbar } from '@/components/AuthNavbar';
 import { projectService } from '@/services/projectService';
 import { ProjectItem, SemestreGroup } from '@/types/projects';
 
@@ -95,13 +94,6 @@ export const HomePage: React.FC = () => {
 
   return (
     <Layout>
-      {/* Affichage de la navbar d'authentification si connecté */}
-      {isAuthenticated && (
-        <div className="fixed top-4 right-4 z-50">
-          <AuthNavbar />
-        </div>
-      )}
-      
       <GridPatternCard>
         <GridPatternCardBody>
           <Badge variant="outline" className="mb-1 text-[9px]">

@@ -18,16 +18,19 @@ import {
 import Layout from "@/components/Layout";
 import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-ellipsis-pattern";
 import { ProjectManager } from '@/components/ProjectManager';
-import { AuthNavbar } from '@/components/AuthNavbar';
+import { SettingsPanel } from '@/components/SettingsPanel';
 import { projectService } from '@/services/projectService';
 import { analyticsService, AnalyticsOverview, SystemStatus } from '@/services/analyticsService';
 import { ProjectItem } from '@/types/projects';
-
-type DashboardTab = 'overview' | 'projects';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<DashboardTab>('overview');
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -90,18 +93,18 @@ export const Dashboard: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'En ligne': return 'text-green-500 border-green-500 bg-green-600/30';
-      case 'Attention': return 'text-yellow-400 border-yellow-400 bg-yellow-600/30';
-      case 'Hors ligne': return 'text-red-400 border-red-400 bg-red-600/30';
-      default: return 'text-gray-400 border-gray-400 bg-gray-600/30';
+      case 'En ligne': return 'text-green-500 border-green-500 bg-green-600/10';
+      case 'Attention': return 'text-yellow-400 border-yellow-400 bg-yellow-600/10';
+      case 'Hors ligne': return 'text-red-400 border-red-400 bg-red-600/10';
+      default: return 'text-gray-400 border-gray-400 bg-gray-600/10';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'En ligne': return;
-      case 'Attention': return;
-      case 'Hors ligne': return;
+      case 'En ligne': return <Activity className="w-4 h-4" />;
+      case 'Attention': return <Activity className="w-4 h-4" />;
+      case 'Hors ligne': return <Activity className="w-4 h-4" />;
       default: return <Activity className="w-4 h-4" />;
     }
   };
@@ -137,7 +140,7 @@ export const Dashboard: React.FC = () => {
               variant="outline" 
               size="sm" 
               onClick={refreshData}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-xs"
             >
               <RefreshCw className="w-4 h-4" />
               Actualiser
@@ -225,47 +228,47 @@ export const Dashboard: React.FC = () => {
           <CardContent className="p-6">
             <h2 className="text-xl font-bold mb-4">Statut système</h2>
             <div className="space-y-4">
-              <Card variant="inner">
+              <Card variant="default">
                 <div className='flex flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
                     <Database className="w-5 h-5 text-blue-600" />
                     <span className="text-sm font-medium">Base de données</span>
                   </div>
-                  <Badge variant="outline" className={getStatusColor(systemStatus?.database || 'offline')}>
-                    {getStatusIcon(systemStatus?.database || 'offline')}
-                    <span className="ml-1 capitalize">{systemStatus?.database || 'offline'}</span>
+                  <Badge variant="outline" className={getStatusColor(systemStatus?.database || 'Hors ligne')}>
+                    {getStatusIcon(systemStatus?.database || 'Hors ligne')}
+                    <span className="ml-1 capitalize">{systemStatus?.database || 'Hors ligne'}</span>
                   </Badge>
                 </div>
               </Card>
               
-              <Card variant='inner'>
+              <Card variant='default'>
                 <div className='flex flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
                     <Server className="w-5 h-5 text-green-600" />
                     <span className="text-sm font-medium">Serveur API</span>
                   </div>
-                  <Badge variant="outline" className={getStatusColor(systemStatus?.server || 'offline')}>
-                    {getStatusIcon(systemStatus?.server || 'offline')}
-                    <span className="ml-1 capitalize">{systemStatus?.server || 'offline'}</span>
+                  <Badge variant="outline" className={getStatusColor(systemStatus?.server || 'Hors ligne')}>
+                    {getStatusIcon(systemStatus?.server || 'Hors ligne')}
+                    <span className="ml-1 capitalize">{systemStatus?.server || 'Hors ligne'}</span>
                   </Badge>
                   </div>
               </Card>
               
-              <Card variant='inner'>
+              <Card variant='default'>
               <div className='flex flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
                     <Globe className="w-5 h-5 text-purple-600" />
                     <span className="text-sm font-medium">API Frontend</span>
                   </div>
-                  <Badge variant="outline" className={getStatusColor(systemStatus?.api || 'offline')}>
-                    {getStatusIcon(systemStatus?.api || 'offline')}
-                    <span className="ml-1 capitalize">{systemStatus?.api || 'offline'}</span>
+                  <Badge variant="outline" className={getStatusColor(systemStatus?.api || 'Hors ligne')}>
+                    {getStatusIcon(systemStatus?.api || 'Hors ligne')}
+                    <span className="ml-1 capitalize">{systemStatus?.api || 'Hors ligne'}</span>
                   </Badge>
               </div>
               </Card>
 
               <div className="grid grid-cols-2 gap-4 mt-4">
-                <Card variant='inner'>
+                <Card variant='default'>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">CPU</span>
                     <span className="text-sm text-gray-600 dark:text-gray-400">{systemStatus?.cpuUsage || 0}%</span>
@@ -278,7 +281,7 @@ export const Dashboard: React.FC = () => {
                   </div>
                 </Card>
                 
-                <Card variant='inner'>
+                <Card variant='default'>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">Mémoire</span>
                     <span className="text-sm text-gray-600 dark:text-gray-400">{systemStatus?.memoryUsage || 0}%</span>
@@ -292,7 +295,7 @@ export const Dashboard: React.FC = () => {
                 </Card>
               </div>
 
-              <Card variant='inner'>
+              <Card variant='default'>
                 <div className='flex flex-row items-center justify-between'>
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-purple-600" />
@@ -316,8 +319,7 @@ export const Dashboard: React.FC = () => {
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => setActiveTab('projects')}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-xs"
             >
               <Eye className="w-4 h-4" />
               Voir tous
@@ -337,9 +339,8 @@ export const Dashboard: React.FC = () => {
                   <span>{Object.keys(project.content).length} projet(s)</span>
                   <Button 
                     variant="ghost" 
-                    size="sm"
-                    onClick={() => setActiveTab('projects')}
-                    className="h-6 px-2 text-xs"
+                    size="icon"
+                    className="text-xs"
                   >
                     <Edit className="w-3 h-3" />
                   </Button>
@@ -370,7 +371,6 @@ export const Dashboard: React.FC = () => {
             <Button 
               variant="outline" 
               className="flex items-center gap-2"
-              onClick={() => setActiveTab('projects')}
             >
               <FolderOpen className="w-4 h-4" />
               Gérer les projets
@@ -399,13 +399,14 @@ export const Dashboard: React.FC = () => {
     </div>
   );
 
+  const renderSettingsTab = () => (
+    <div className="mt-6">
+      <SettingsPanel />
+    </div>
+  );
+
   return (
     <Layout>
-      {/* Affichage de la navbar d'authentification */}
-      <div className="fixed top-4 right-4 z-50">
-        <AuthNavbar />
-      </div>
-      
       <GridPatternCard>
         <GridPatternCardBody>
           <Badge variant="outline" className="mb-1 text-[9px]">
@@ -427,28 +428,43 @@ export const Dashboard: React.FC = () => {
       {/* Onglets */}
       <Card variant="plus" className="bg-background mt-6">
         <CardContent className="p-6">
-          <div className="flex space-x-1 mb-6">
-            <Button
-              variant={activeTab === 'overview' ? 'default' : 'ghost'}
-              onClick={() => setActiveTab('overview')}
-              className="flex items-center gap-2"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Vue d'ensemble
-            </Button>
-            <Button
-              variant={activeTab === 'projects' ? 'default' : 'ghost'}
-              onClick={() => setActiveTab('projects')}
-              className="flex items-center gap-2"
-            >
-              <FolderOpen className="w-4 h-4" />
-              Gestion des projets
-            </Button>
-          </div>
-
-          {/* Contenu des onglets */}
-          {activeTab === 'overview' && renderOverviewTab()}
-          {activeTab === 'projects' && renderProjectsTab()}
+          <Tabs defaultValue="overview" className="items-center">
+            <TabsList className="h-auto rounded-none border-b bg-transparent p-0">
+              <TabsTrigger
+                value="overview"
+                className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
+              >
+                <BarChart3 className="w-4 h-4" />
+                Vue d'ensemble
+              </TabsTrigger>
+              <TabsTrigger
+                value="projects"
+                className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
+              >
+                <FolderOpen className="w-4 h-4" />
+                Gestion des projets
+              </TabsTrigger>
+              <TabsTrigger
+                value="settings"
+                className="data-[state=active]:after:bg-primary relative rounded-none py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none flex items-center gap-2"
+              >
+                <Edit className="w-4 h-4" />
+                Paramètres
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="overview">
+              {renderOverviewTab()}
+            </TabsContent>
+            
+            <TabsContent value="projects">
+              {renderProjectsTab()}
+            </TabsContent>
+            
+            <TabsContent value="settings">
+              {renderSettingsTab()}
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </Layout>
