@@ -1,4 +1,4 @@
-import { API_CONFIG } from '@/config/api';
+import { buildApiUrl } from '@/config/api';
 
 export interface Settings {
   id: string;
@@ -12,12 +12,11 @@ export interface UpdateSettingsData {
 }
 
 class SettingsService {
-  private baseUrl = `${API_CONFIG.BASE_URL}/settings`;
-
   // Récupérer les paramètres
   async getSettings(): Promise<Settings> {
     try {
-      const response = await fetch(this.baseUrl, {
+      const url = buildApiUrl('/settings');
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -38,7 +37,8 @@ class SettingsService {
   // Mettre à jour les paramètres
   async updateSettings(data: UpdateSettingsData): Promise<Settings> {
     try {
-      const response = await fetch(this.baseUrl, {
+      const url = buildApiUrl('/settings');
+      const response = await fetch(url, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,8 @@ class SettingsService {
   // Basculer l'affichage de la modal de pub
   async togglePubModal(): Promise<Settings> {
     try {
-      const response = await fetch(`${this.baseUrl}/toggle-pub-modal`, {
+      const url = buildApiUrl('/settings/toggle-pub-modal');
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

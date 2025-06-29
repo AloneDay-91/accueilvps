@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import { Settings as SettingsIcon } from 'lucide-react';
-import { settingsService, Settings } from '@/services/settingsService';
-import { useProgressToast } from '@/contexts/ProgressToastContext';
-import { Switch } from '@/components/ui/switch';
 import { useSettings } from '@/contexts/SettingsContext';
+import { Switch } from '@/components/ui/switch';
+import { Card, CardContent } from '@/components/ui/card';
+import { useProgressToast } from '@/contexts/ProgressToastContext';
 
 export const SettingsPanel: React.FC = () => {
   const { settings, loading, updateSettings } = useSettings();
@@ -37,23 +35,22 @@ export const SettingsPanel: React.FC = () => {
               Afficher ou masquer la modal de publicité en bas à droite
             </p>
           </div>
-
-          <div className='flex flex-row gap-2 items-center'>
-          <Switch
-            checked={!!settings?.showPubModal}
-            onCheckedChange={async (checked) => {
-              try {
-                await updateSettings({ showPubModal: checked });
-                success(checked ? 'Modal de pub activée' : 'Modal de pub désactivée');
-              } catch (err) {
-                showError('Erreur lors de la mise à jour des paramètres');
-              }
-            }}
-            disabled={loading}
-          />
-          <span className="ml-2 text-xs">
-            {settings?.showPubModal ? 'Activée' : 'Désactivée'}
-          </span>
+          <div className="flex items-center gap-2">
+            <Switch
+              checked={!!settings?.showPubModal}
+              onCheckedChange={async (checked) => {
+                try {
+                  await updateSettings({ showPubModal: checked });
+                  success(checked ? 'Modal de pub activée' : 'Modal de pub désactivée');
+                } catch {
+                  showError('Erreur lors de la mise à jour des paramètres');
+                }
+              }}
+              disabled={loading}
+            />
+            <span className="ml-2 text-xs">
+              {settings?.showPubModal ? 'Activée' : 'Désactivée'}
+            </span>
           </div>
         </div>
       </CardContent>
